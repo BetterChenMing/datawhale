@@ -73,7 +73,7 @@ sns.distplot(y, kde=False, fit=st.norm)
 plt.figure(3); plt.title('Log Normal')
 sns.distplot(y, kde=False, fit=st.lognorm)
 ```
-由拟合结果可以看出，价格并不服从正态分布（单独汽车这个类别不奇怪），在进行回归分析之前需要转换。虽然对数变换做得很好，但最佳拟合还是johnsonsu。
+由拟合结果可以看出，价格并不服从正态分布（单独汽车这个类别不奇怪），在进行回归分析之前需要转换。对数变换很不错，最佳拟合是johnsonsu。
 ```
 """查看偏度和峰度"""
 sns.distplot(Train_data['price'])
