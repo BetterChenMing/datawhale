@@ -34,9 +34,10 @@ train_data = pd.read_csv('data/used_car_train_20200313.csv', sep=' ')
 test_data = pd.read_csv('data/used_car_testA_20200313.csv', sep=' ')
 ```
 ```
-train_data.shape
-test_data.shape
+train_data.shape # (150000, 31)
+test_data.shape # (50000, 30)
 ```
+可以看出训练集共 150000 个样本，30 个特征，1 列价格；测试集共 50000 个样本，30 个特征
 ```
 train_data.head()
 train_data.info()
