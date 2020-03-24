@@ -96,7 +96,126 @@ numeric_features = ['power', 'kilometer', 'v_0', 'v_1', 'v_2', 'v_3', 'v_4', 'v_
 categorical_features = ['name', 'model', 'brand', 'bodyType', 'fuelType', 'gearbox', 'notRepairedDamage', 'regionCode']
 
 ```
+4、接下来我们主要对数值特征和类别特征进一步挖掘信息，包括类别偏斜，类别分布可视化，数值可视化等
+```
+"""类别偏斜处理"""
+for cat_fea in categorical_features:
+    print(cate_fea + '特征分布如下：')
+    print('{}特征有{}不同的值'.format(cate_fea, len(train_data[cat_fea].unique())))
+    print(train_data[cat_fea].value_counts())
+    print()
+# seller、offerType等字段偏斜就比较严重，直接删除这些字段
+del train_data['seller']
+del train_data['offerType']
+del test_data['seller']
+del test_data['offerType']
 
+categorical_features.remove('seller')
+categorical_features.remove('offerType')
+```
+```
+"""类别的unique分布"""
+for cat in categorical_features:
+    print(len(train_data[cat].unique()))
+
+# 结果
+249
+40
+9
+8
+3
+3
+7905
+
+# 因为regionCode的类别太稀疏了，所以先去掉，因为后面要可视化，不画稀疏的
+categorical_features.remove('regionCode')
+```
+```
+"""类别特征箱型图可视化"""
+for c in categorical_features:
+    train_data[c] = train_data[c].astype('category')
+    if train_data[c].isnull().any():
+        train_data[c] = train_data[c].cat.add_categories(['MISSING'])
+        train_data[c] = train_data[c].fillna('MISSING')
+
+def boxplot(x, y, **kwargs):
+    sns.boxenplot(x=x, y=y)
+    x = plt.xticks(rotation=90)
+
+f = pd.melt(train_data, id_vars=['price'], value_vars=categorical_features)
+g = sns.FacetGrid(f, col="variable",  col_wrap=3, sharex=False, sharey=False, size=5)
+g = g.map(boxplot, "value", "price")
+```
+```
+"""类别特征的小提琴图可视化， 小提琴图类似箱型图，比后者高级点，图好看些"""
+catg_list = categorical_features
+target = 'price'
+for catg in catg_list :
+    sns.violinplot(x=catg, y=target, data=train_data)
+    plt.show()
+
+"""类别特征的柱形图可视化"""
+def bar_plot(x, y, **kwargs):
+    sns.barplot(x=x, y=y)
+    x=plt.xticks(rotation=90)
+
+f = pd.melt(train_data, id_vars=['price'], value_vars=categorical_features)
+g = sns.FacetGrid(f, col="variable",  col_wrap=3, sharex=False, sharey=False, size=5)
+g = g.map(bar_plot, "value", "price")
+```
+```
+"""类别特征的每个类别频数可视化(count_plot)"""
+def count_plot(x,  **kwargs):
+    sns.countplot(x=x)
+    x=plt.xticks(rotation=90)
+
+f = pd.melt(train_data,  value_vars=categorical_features)
+g = sns.FacetGrid(f, col="variable",  col_wrap=3, sharex=False, sharey=False, size=5)
+g = g.map(count_plot, "value")
+```
+数值特征的探索我们要分析相关性等
+```
+numeric_train_data = train_data[numeric_features]
+
+# 把price这一列加上，这个也是数值
+numeric_train_data['price'] = Y_train
+
+"""相关性分析"""
+correlation = numeric_train_data.corr()
+print(correlation['price'].sort_values(ascending=False), '\n')   # 与price相关的特征排序
+```
+```
+# 可视化
+f, ax = plt.subplots(figsize=(10,10))
+plt.title('Correlation of Numeric Features with Price', y=1, size=16)
+sns.heatmap(correlation, square=True, vmax=0.8)
+```
+```
+# 删除price
+del numeric_train_data['price']
+
+"""查看几个数值特征的偏度和峰度"""
+for col in numeric_train_data.columns:
+     print('{:15}'.format(col), 
+          'Skewness: {:05.2f}'.format(numeric_train_data[col].skew()) , 
+          '   ' ,
+          'Kurtosis: {:06.2f}'.format(numeric_train_data[col].kurt())  
+         )
+
+"""每个数字特征得分布可视化"""
+f = pd.melt(train_data, value_vars=numeric_features)
+g = sns.FacetGrid(f, col="variable",  col_wrap=5, sharex=False, sharey=False)
+g = g.map(sns.distplot, "value")
+```
+
+```
+"""数字特征相互之间的关系可视化"""
+sns.set()
+columns = ['price', 'v_12', 'v_8' , 'v_0', 'power', 'v_5',  'v_2', 'v_6', 'v_1', 'v_14']
+sns.pairplot(train_data[columns],size = 2 ,kind ='scatter',diag_kind='kde')
+plt.show()
+# 这里可以看到有些特征之间是相关的， 比如 v_1 和 v_6
+```
 
 
 
