@@ -14,6 +14,11 @@
 ### 具体步骤：
 
 1、导入需要用到的python库与包
+
+```
+# jupyter magic command,there are so many magic like this.
+%config ZMQInteractiveShell.ast_node_interactivity='all' # 打印单元格内所有输出
+```
 ```
 import numpy as np
 import pandas as pd
@@ -29,7 +34,18 @@ train_data = pd.read_csv('data/used_car_train_20200313.csv', sep=' ')
 test_data = pd.read_csv('data/used_car_testA_20200313.csv', sep=' ')
 ```
 ```
-
+train_data.shape
+test_data.shape
+```
+```
+train_data.head()
+train_data.info()
+train_data.describe()
+```
+```
+test_data.head()
+test_data.info()
+test_data.describe()
 ```
 3、
 
