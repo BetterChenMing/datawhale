@@ -53,7 +53,7 @@ test_data.head()
 test_data.info()
 test_data.describe()
 ```
-3、了解我们要预测的对象的分布情况
+3、了解我们要预测的对象的分布情况,将字段分成数值型和类别型，后面分开查看和处理
 ```
 """查看预测值的频数"""
 train_data['price'].value_counts()
@@ -74,4 +74,39 @@ plt.figure(3); plt.title('Log Normal')
 sns.distplot(y, kde=False, fit=st.lognorm)
 ```
 由拟合结果可以看出，价格并不服从正态分布（单独汽车这个类别不奇怪），在进行回归分析之前需要转换。虽然对数变换做得很好，但最佳拟合还是无界约翰逊分布。
+```
+"""查看偏度和峰度"""
+sns.distplot(Train_data['price'])
+print("Skewness: %f" % Train_data['price'].skew())
+print("Kurtosis: %f" % Train_data['price'].kurt())
+# train_data.skew()
+# train_data.kurt()
+plt.figure(figsize=(20, 5))
+plt.subplot(121)
+sns.distplot(train_data.skew(), color='blue', axlabel='Skewness')
+plot.subplot(122)
+sns.distplot(train_data.kurt(), color='orange', axlabel='Kurtness')
+```
+把字段分为数值字段和类别字段
+```
+"""先分离出label值"""
+y_train = train_data['price']
+
+numeric_features = ['power', 'kilometer', 'v_0', 'v_1', 'v_2', 'v_3', 'v_4', 'v_5', 'v_6', 'v_7', 'v_8', 'v_9', 'v_10', 'v_11', 'v_12', 'v_13','v_14' ]
+categorical_features = ['name', 'model', 'brand', 'bodyType', 'fuelType', 'gearbox', 'notRepairedDamage', 'regionCode']
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
