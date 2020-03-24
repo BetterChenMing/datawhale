@@ -43,9 +43,9 @@ train_data.head()
 train_data.info()
 train_data.describe()
 ```
-通过info()可以发现字段的type，其中有一个 object类型,其次部份字段有缺失值，可能需要填充处理（方法待确定）
+通过info()可以发现字段的type，其中 notRepairedDamage 为 object类型,其次部份字段有缺失值，可能需要填充处理（方法待确定）
 ```
-train_data['notRepairedDamage'].value_counts() 
+train_data['notRepairedDamage'].value_counts()  #数据有非数字的值 ‘-’存在，考虑置为 na 或者用中位数替代（待实现）
 ```
 
 ```
@@ -55,7 +55,23 @@ test_data.describe()
 ```
 3、了解我们要预测的对象的分布情况
 ```
+"""查看预测值的频数"""
+train_data['price'].value_counts()
 
+# 直方图可视化 自动划分10（默认值）个价格区间 统计每个区间的频数
+plt.hist(train_data['price'], orientation='vertical', histtype='bar', color='red')
+plt.show()
 ```
-
+发现价格大于 20000 的值极少，可以考虑把这些值当作离群点（或异常值）直接剔除（不确定，回归问题考虑可以保留）
+```
+import scipy.stats as st
+y = train_data['price']
+plt.figure(1); plt.title('Johnson SU')
+sns.distplot(y, kde=False, fit=st.johnsonsu)
+plt.figure(2); plt.title('Normal')
+sns.distplot(y, kde=False, fit=st.norm)
+plt.figure(3); plt.title('Log Normal')
+sns.distplot(y, kde=False, fit=st.lognorm)
+```
+由拟合结果可以看出，价格并不服从正态分布（单独汽车这个类别不奇怪），在进行回归分析之前需要转换。虽然对数变换做得很好，但最佳拟合还是无界约翰逊分布。
 
