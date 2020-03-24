@@ -43,11 +43,19 @@ train_data.head()
 train_data.info()
 train_data.describe()
 ```
+通过info()可以发现字段的type，其中有一个 object类型,其次部份字段有缺失值，可能需要填充处理（方法待确定）
+```
+train_data['notRepairedDamage'].value_counts() 
+```
+
 ```
 test_data.head()
 test_data.info()
 test_data.describe()
 ```
-3、
+3、了解我们要预测的对象的分布情况
+```
+
+```
 
 
