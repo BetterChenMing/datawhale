@@ -19,7 +19,7 @@
 # jupyter magic command,there are so many magic like this.
 %config ZMQInteractiveShell.ast_node_interactivity='all' # 打印单元格内所有输出
 ```
-```
+```python
 import numpy as np
 import pandas as pd
 
