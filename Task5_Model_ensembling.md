@@ -1,7 +1,6 @@
 # Task5 Model ensembling
 
 参考网站：https://mlwave.com/kaggle-ensembling-guide/
-地址：https://tianchi.aliyun.com/competition/entrance/231784/introduction?spm=5176.12281957.1004.1.38b02448ausjSX 
 
 ## 5.1 模型融合目标
 
