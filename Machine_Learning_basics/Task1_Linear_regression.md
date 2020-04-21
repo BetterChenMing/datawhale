@@ -13,20 +13,21 @@
 ## 1、线性回归的原理
 
 ### 线性回归的一般形式：
-有数据集$\{(x_1,y_1),(x_2,y_2),...,(x_n,y_n)\}$,其中,$x_i = (x_{i1};x_{i2};x_{i3};...;x_{id}),y_i\in R$<br> 
+有数据集$\{(x_1,y_1),(x_2,y_2),...,(x_n,y_n)\}$,其中,$x_i = (x_{i1};x_{i2};x_{i3};...;x_{id}),y_i\in R$ 
+
 其中n表示变量的数量，d表示每个变量的维度。  
 可以用以下函数来描述y和x之间的关系：
-
+$$
 \begin{align*}
 f(x) 
 &= \theta_0 + \theta_1x_1 + \theta_2x_2 + ... + \theta_dx_d  \\
 &= \sum_{i=0}^{d}\theta_ix_i \\
 \end{align*}
-
-如何来确定$\theta$的值，使得$f(x)$尽可能接近y的值呢？均方误差是回归中常用的性能度量，即：
-
-$$J(\theta)=\frac{1}{2}\sum_{j=1}^{n}(h_{\theta}(x^{(i)})-y^{(i)})^2$$<br>  
-
+$$
+如何来确定$\theta$的值，使得$f(x)$尽可能接近y的值呢？均方误差是回归中常用的性能度量，即
+$$
+J(\theta)=\frac{1}{2}\sum_{j=1}^{n}(h_{\theta}(x^{(i)})-y^{(i)})^2
+$$
 我们可以选择$\theta$，试图让均方误差最小化：
 
 ### 极大似然估计（概率角度的诠释）
@@ -47,11 +48,19 @@ p(\epsilon^{(i)}) = \frac{1}{\sqrt{2\pi}\sigma}exp\left(-\frac{(\epsilon^{(i)})^
 
 因此，
 $$
+$$
 p(y^{(i)}|x^{(i)};\theta) = \frac{1}{\sqrt{2\pi}\sigma}exp\left(-\frac{(y^{(i)}-\theta^T x^{(i)})^2}{2\sigma^2}\right)
+$$
+
+
 $$
 我们建立极大似然函数，即描述数据遵从当前样本分布的概率分布函数。由于样本的数据集独立同分布，因此可以写成
 $$
+$$
 L(\theta) = p(\vec y | X;\theta) = \prod^n_{i=1}\frac{1}{\sqrt{2\pi}\sigma}exp\left(-\frac{(y^{(i)}-\theta^T x^{(i)})^2}{2\sigma^2}\right)
+$$
+
+
 $$
 选择$\theta$，使得似然函数最大化，这就是极大似然估计的思想。
 
@@ -104,17 +113,27 @@ $$\theta_j:=\theta_j-\alpha\frac{\partial{J(\theta)}}{\partial\theta}$$
 
 即：
 $$
+$$
 \theta_j = \theta_j + \alpha\sum_{i=1}^{n}(y^{(i)}-f_\theta(x)^{(i)})x_j^{(i)}
+$$
+
+
 $$
 注：下标j表示第j个参数，上标i表示第i个数据点。
 
 将所有的参数以向量形式表示，可得：
 $$
+$$
 \theta = \theta + \alpha\sum_{i=1}^{n}(y^{(i)}-f_\theta(x)^{(i)})x^{(i)}
 $$
+
+
+
 由于这个方法中，参数在每一个数据点上同时进行了移动，因此称为批梯度下降法，对应的，我们可以每一次让参数只针对一个数据点进行移动，即：
 $$
 \theta = \theta + \alpha(y^{(i)}-f_\theta(x)^{(i)})x^{(i)}
+$$
+
 $$
 这个算法称为随机梯度下降法，随机梯度下降法的好处是，当数据点很多时，运行效率更高；缺点是，因为每次只针对一个样本更新参数，未必找到最快路径达到最优值，甚至有时候会出现参数在最小值附近徘徊而不是立即收敛。但当数据量很大的时候，随机梯度下降法经常优于批梯度下降法。
 
@@ -196,27 +215,30 @@ $$
 $$
 
 $$
-和
+\frac{\partial A^TB}{\partial \vec x} = \frac{\partial A^T}{\partial \vec x}B + \frac{\partial B^T}{\partial \vec x}A
 $$
 
-$$\frac{\partial A^TB}{\partial \vec x} = \frac{\partial A^T}{\partial \vec x}B + \frac{\partial B^T}{\partial \vec x}A$$
+
 
  
 
+$$
 \begin{align*}
 \frac{\partial}{\partial\theta} \theta^TX^TX\theta 
 &= \frac{\partial}{\partial\theta}{(X\theta)^TX\theta}\\
 &= \frac{\partial (X\theta)^T}{\partial\theta}X\theta + \frac{\partial (X\theta)^T}{\partial\theta}X\theta \\
 &= 2X^TX\theta
 \end{align*}
+$$
 
-$$\frac{\partial{J(\theta)}}{\partial\theta} = X^TX\theta - X^TY
+
+$${\frac{\partial{J(\theta)}}{\partial\theta} = X^TX\theta - X^TY}$$
 $$
 令导数等于零，
 
-$$X^TX\theta = X^TY$$
+X^TX\theta = X^TY
 
-$$\theta = (X^TX)^{(-1)}X^TY
+\theta = (X^TX)^{(-1)}X^TY
 $$
 
 注：CS229视频中吴恩达的推导利用了矩阵迹的性质，可自行参考学习。
@@ -327,7 +349,7 @@ predict(X): 预测 基于 R^2值
 
 score： 评估
 
-<table align ="left";background-color="#87CEEB">
+<table align ="left";background-color="#78EEEE">
 <tr>
     <td bgcolor="#87CEEB"><font size=2>练习题：请用以下数据（可自行生成尝试，或用其他已有数据集）</font></td>
 </tr>
@@ -344,6 +366,7 @@ score： 评估
     <td  bgcolor="#87CEEB"><font size=2>4、比较各方法得出的结果是否一致。</font></td>
 </tr>
 </table>
+
 
 生成数据
 
