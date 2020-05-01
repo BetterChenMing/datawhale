@@ -80,7 +80,7 @@ $$
 其实还是直线，不满足条件的节点也被错误的分配了，只是尽可能的求解最大间隔，
 
 ### 核函数
-引入核函数可以解决非线性的情况：<font color="#F00" size = "5px">将样本从原始空间映射到一个更高为的特征空间，使得样本在这个特征空间内线性可分</font>。图片所示：
+引入核函数可以解决非线性的情况：<font color="#F00" size = "5px">将样本从原始空间映射到一个更高纬的特征空间，使得样本在这个特征空间内线性可分</font>。图片所示：
 ![SVM-非线性样本可分图.PNG	
 ](https://raw.githubusercontent.com/Klauszhao/picture/master/picture/common/SVM-%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%A0%B7%E6%9C%AC%E5%8F%AF%E5%88%86%E5%9B%BE.PNG)
 
