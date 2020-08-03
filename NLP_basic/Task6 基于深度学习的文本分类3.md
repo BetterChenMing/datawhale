@@ -175,11 +175,9 @@ if self.training:
     reps = self.dropout(reps)
 ```
 
-### 本章小结
+### 小结
 
 本章介绍了Bert的原理和使用，具体包括pretrain和finetune两部分。
 
-### 本章作业
-
-- 完成Bert Pretrain和Finetune的过程
-- 阅读Bert官方文档，找到相关参数进行调参
+完成Bert Pretrain和Finetune的过程
+阅读Bert官方文档，找到相关参数进行调参
